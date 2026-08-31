@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="screen">
+    <div class="screen-header">
+        <div class="screen-header-left">
+            <div class="screen-header-button close"></div>
+            <div class="screen-header-button maximize"></div>
+            <div class="screen-header-button minimize"></div>
+        </div>
+    </div>
+    <div class="screen-body">
+        <div class="screen-body-item left">
+            <div class="app-title">
+                <span>{{ title|upper }}</span>
+                <span>{{ meta.name }}</span>
+            </div>
+        </div>
+        <div class="screen-body-item">
+            <p class="app-copy">{{ description }}</p>
+            <form method="POST" class="app-form">
+                {{ form.hidden_tag() }}
+                {% for field in form if field.widget.input_type not in ('hidden', 'submit') %}
+                <div class="app-form-group">
+                    {{ field.label(class="app-form-label") }}
+                    {{ field(class="app-form-control") }}
+                    {% for error in field.errors %}
+                    <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <div class="app-form-group buttons">
+                    {{ form.submit(class="app-form-button") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if result %}
+<section class="panel result-panel">
+    {% include result_template %}
+    {% include "partials/cost.html" %}
+</section>
+{% endif %}
+{% endblock %}

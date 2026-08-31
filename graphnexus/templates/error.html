@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ code }}{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h1 class="panel-title">{{ code }}</h1>
+    <p>{{ message }}</p>
+    <a class="app-form-button" href="{{ url_for('main.home') }}">Back to home</a>
+</section>
+{% endblock %}

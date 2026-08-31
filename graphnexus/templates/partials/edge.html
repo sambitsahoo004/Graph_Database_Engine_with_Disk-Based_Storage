@@ -1,0 +1,15 @@
+<h2 class="panel-title">Edge lookup</h2>
+{% if result.value.exists %}
+<p class="result-headline">Present</p>
+{% if meta.weighted %}
+<p class="field-hint">Edge weight {{ "{:,}".format(result.value.weight) }}.</p>
+{% endif %}
+{% else %}
+<p class="result-headline muted">Absent</p>
+<p class="field-hint">There is no edge in that direction.</p>
+{% endif %}
+<p class="field-hint">
+    Resolved in {{ result.value.probes }} probe{{ "" if result.value.probes == 1 else "s" }}
+    of the hash table. A probe sequence stays inside one 512-byte block for its
+    first 31 steps, because 32 buckets fit in a block.
+</p>

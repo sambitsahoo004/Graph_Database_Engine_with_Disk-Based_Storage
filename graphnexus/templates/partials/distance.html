@@ -1,0 +1,8 @@
+<h2 class="panel-title">Shortest distance</h2>
+{% if result.value < 0 %}
+<p class="result-headline muted">No path</p>
+<p class="field-hint">There is no directed path between those two nodes.</p>
+{% else %}
+<p class="result-headline">{{ "{:,}".format(result.value) }}</p>
+<p class="field-hint">{{ "Total edge weight" if meta.weighted else "Edges traversed" }}.</p>
+{% endif %}

@@ -1,0 +1,15 @@
+<h2 class="panel-title">Shared components</h2>
+<table class="result-table">
+    <tbody>
+        <tr>
+            <th scope="row">Same strongly connected component</th>
+            <td>{{ "Yes" if result.value.same_scc else "No" }}
+                <span class="muted">({{ result.value.scc_a }} vs {{ result.value.scc_b }})</span></td>
+        </tr>
+        <tr>
+            <th scope="row">Same weakly connected component</th>
+            <td>{{ "Yes" if result.value.same_wcc else "No" }}
+                <span class="muted">({{ result.value.wcc_a }} vs {{ result.value.wcc_b }})</span></td>
+        </tr>
+    </tbody>
+</table>

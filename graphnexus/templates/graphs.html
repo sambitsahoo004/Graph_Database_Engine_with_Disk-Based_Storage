@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Graphs{% endblock %}
+
+{% block content %}
+<div class="screen">
+    <div class="screen-header">
+        <div class="screen-header-left">
+            <div class="screen-header-button close"></div>
+            <div class="screen-header-button maximize"></div>
+            <div class="screen-header-button minimize"></div>
+        </div>
+    </div>
+    <div class="screen-body">
+        <div class="screen-body-item left">
+            <div class="app-title">
+                <span>GRAPHS</span>
+                <span>upload and select</span>
+            </div>
+        </div>
+        <div class="screen-body-item">
+            <form method="POST" enctype="multipart/form-data" class="app-form">
+                {{ form.hidden_tag() }}
+
+                <div class="app-form-group">
+                    {{ form.graph_file.label(class="app-form-label") }}
+                    {{ form.graph_file(class="app-form-control") }}
+                    {% for error in form.graph_file.errors %}
+                    <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                    <p class="field-hint">
+                        One edge per line: <code>source target</code>, or
+                        <code>source target weight</code> for weighted graphs.
+                        Lines starting with <code>#</code> are ignored.
+                    </p>
+                </div>
+
+                <div class="app-form-group">
+                    {{ form.graph_type.label(class="app-form-label") }}
+                    {{ form.graph_type(class="app-form-control") }}
+                </div>
+
+                <div class="app-form-group buttons">
+                    {{ form.submit(class="app-form-button") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<section class="panel">
+    <h2 class="panel-title">Built graphs</h2>
+    {% if available_graphs %}
+    <table class="result-table">
+        <thead>
+            <tr><th scope="col">Name</th><th scope="col">Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for name in available_graphs %}
+            <tr>
+                <td>{{ name }}{% if name == active_graph %} <span class="tag">active</span>{% endif %}</td>
+                <td class="row-actions">
+                    <form method="POST" action="{{ url_for('main.select_graph', name=name) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="link-button" type="submit">Make active</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('main.remove_graph', name=name) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="link-button danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty-state">No graphs yet. Upload an edge list above to build one.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+<h2 class="panel-title">Nearest neighbours</h2>
+{% if result.value %}
+<table class="result-table">
+    <thead>
+        <tr><th scope="col">Node</th><th scope="col">Distance</th></tr>
+    </thead>
+    <tbody>
+        {% for node, distance in result.value %}
+        <tr><td>{{ node }}</td><td>{{ "{:,}".format(distance) }}</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty-state">That node cannot reach any others.</p>
+{% endif %}

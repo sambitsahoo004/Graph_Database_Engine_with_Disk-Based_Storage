@@ -1,0 +1,7 @@
+<h2 class="panel-title">PageRank</h2>
+<table class="result-table">
+    <tbody>
+        <tr><th scope="row">Score</th><td>{{ "%.12f"|format(result.value.pagerank) }}</td></tr>
+        <tr><th scope="row">Rank</th><td>{{ "{:,}".format(result.value.rank) }} of {{ "{:,}".format(meta.nodes) }}</td></tr>
+    </tbody>
+</table>

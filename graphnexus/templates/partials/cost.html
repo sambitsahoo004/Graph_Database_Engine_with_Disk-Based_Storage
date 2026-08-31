@@ -1,0 +1,14 @@
+<h3 class="panel-subtitle">Query cost</h3>
+<table class="result-table cost-table">
+    <tbody>
+        <tr><th scope="row">Elapsed</th><td>{{ "%.3f"|format(result.elapsed_ms) }} ms</td></tr>
+        <tr><th scope="row">Blocks read from disk</th><td>{{ "{:,}".format(result.stats.physical_reads) }}</td></tr>
+        <tr><th scope="row">Block requests</th><td>{{ "{:,}".format(result.stats.logical_reads) }}</td></tr>
+        <tr><th scope="row">Buffer pool hit ratio</th><td>{{ "%.1f"|format(result.hit_ratio * 100) }}%</td></tr>
+    </tbody>
+</table>
+<p class="field-hint">
+    Block requests counts every 512-byte block the query asked for. Blocks read
+    counts the ones that missed the buffer pool and reached the file, so a warm
+    pool shows fewer reads than requests.
+</p>

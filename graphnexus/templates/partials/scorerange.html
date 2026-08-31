@@ -1,0 +1,23 @@
+<h2 class="panel-title">Score range</h2>
+{% if not result.value %}
+<p class="result-headline muted">No matches</p>
+<p class="field-hint">No node scores fall inside that range.</p>
+{% else %}
+<p class="field-hint">
+    {{ "{:,}".format(result.value | length) }} node{{ "" if result.value | length == 1 else "s" }},
+    highest score first.
+</p>
+<table class="result-table">
+    <thead>
+        <tr><th scope="col">Node</th><th scope="col">PageRank</th></tr>
+    </thead>
+    <tbody>
+        {% for row in result.value %}
+        <tr>
+            <td>{{ row.node }}</td>
+            <td>{{ "%.12f"|format(row.pagerank) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}

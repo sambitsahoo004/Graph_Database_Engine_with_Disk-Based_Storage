@@ -1,0 +1,19 @@
+<h2 class="panel-title">Rank range</h2>
+{% if result.value %}
+<table class="result-table">
+    <thead>
+        <tr><th scope="col">Rank</th><th scope="col">Node</th><th scope="col">PageRank</th></tr>
+    </thead>
+    <tbody>
+        {% for row in result.value %}
+        <tr>
+            <td>{{ "{:,}".format(row.rank) }}</td>
+            <td>{{ row.node }}</td>
+            <td>{{ "%.12f"|format(row.pagerank) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty-state">No nodes in that rank range.</p>
+{% endif %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Metadata{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h1 class="panel-title">{{ meta.name }}</h1>
+
+    {% if meta.warnings %}
+    <ul class="flash-list">
+        {% for warning in meta.warnings %}
+        <li class="flash flash-warning">{{ warning }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2 class="panel-subtitle">Shape</h2>
+    <table class="result-table">
+        <tbody>
+            <tr><th scope="row">Nodes</th><td>{{ "{:,}".format(meta.nodes) }}</td></tr>
+            <tr><th scope="row">Edges</th><td>{{ "{:,}".format(meta.edges) }}</td></tr>
+            <tr><th scope="row">Edge weights</th><td>{{ "Weighted" if meta.weighted else "Unweighted" }}</td></tr>
+            {% if meta.self_loops_removed %}
+            <tr><th scope="row">Self-loops removed</th><td>{{ "{:,}".format(meta.self_loops_removed) }}</td></tr>
+            {% endif %}
+            {% if meta.duplicates_removed %}
+            <tr><th scope="row">Duplicate edges removed</th><td>{{ "{:,}".format(meta.duplicates_removed) }}</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <h2 class="panel-subtitle">Connectivity</h2>
+    <table class="result-table">
+        <tbody>
+            <tr><th scope="row">Strongly connected components</th><td>{{ "{:,}".format(meta.num_scc) }}</td></tr>
+            <tr><th scope="row">Largest strongly connected component</th><td>{{ "{:,}".format(meta.largest_scc) }}</td></tr>
+            <tr><th scope="row">Weakly connected components</th><td>{{ "{:,}".format(meta.num_wcc) }}</td></tr>
+            <tr><th scope="row">Largest weakly connected component</th><td>{{ "{:,}".format(meta.largest_wcc) }}</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="panel-subtitle">Cycles</h2>
+    <table class="result-table">
+        <tbody>
+            <tr><th scope="row">Acyclic</th><td>{{ "Yes" if meta.is_dag else "No" }}</td></tr>
+            <tr><th scope="row">Back edges in a DFS forest</th><td>{{ "{:,}".format(meta.back_edges) }}</td></tr>
+            <tr><th scope="row">Nodes lying on a cycle</th><td>{{ "{:,}".format(meta.nodes_on_cycles) }}</td></tr>
+        </tbody>
+    </table>
+    <p class="field-hint">
+        Counting every simple cycle is #P-hard and the total is astronomically large
+        on most real graphs, so these three exact measures are reported instead.
+        A node lies on a cycle when its strongly connected component has more than
+        one member, or when it has a self-loop.
+    </p>
+
+    <h2 class="panel-subtitle">PageRank</h2>
+    <table class="result-table">
+        <tbody>
+            <tr><th scope="row">Iterations to converge</th><td>{{ meta.pagerank_iterations }}</td></tr>
+            <tr><th scope="row">Total mass</th><td>{{ "%.10f"|format(meta.pagerank_total) }}</td></tr>
+        </tbody>
+    </table>
+    <p class="field-hint">
+        Mass held by nodes with no outgoing edges is redistributed each iteration,
+        so the vector sums to 1.
+    </p>
+
+    <h2 class="panel-subtitle">Storage</h2>
+    <table class="result-table">
+        <tbody>
+            <tr><th scope="row">Build time</th><td>{{ "{:,}".format(meta.build_ms) }} ms</td></tr>
+            <tr><th scope="row">On disk</th><td>{{ "{:,}".format(meta.on_disk_bytes) }} bytes</td></tr>
+            <tr><th scope="row">Blocks of 512 bytes</th><td>{{ "{:,}".format(meta.total_blocks) }}</td></tr>
+        </tbody>
+    </table>
+</section>
+{% endblock %}
