@@ -1,0 +1,10 @@
+# A tiny weighted graph for smoke-testing the weighted path.
+# Format: source target weight
+# Shortest 0 -> 4 is 0->1->3->4 with total weight 6, not the direct 0->4 edge (20).
+0 1 2
+1 3 1
+3 4 3
+0 2 4
+2 4 9
+0 4 20
+4 0 1
